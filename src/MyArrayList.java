@@ -1,4 +1,6 @@
+import java.lang.reflect.Type;
 import java.util.*;
+import java.util.Arrays;
 import java.util.Comparator;
 
 /**
@@ -14,67 +16,57 @@ public class MyArrayList<E> implements List211<E> {
 	private E[] data;
 	private E e;
 	private boolean finished;
-	ArrayList<E> contacts = new ArrayList();
-	ContactComparator comp = new ContactComparator();
-	
-	MyArrayList(){
+	private Comparator comp;
+
+	MyArrayList(E[] listOfContacts, Comparator<? super E> compare) {
+		data = listOfContacts;
+		comp = compare;
+		size = data.length;
+		selectionSort(comp);
 	}
 
 	@Override
-	public boolean add(E e) {
-		// TODO Auto-generated method stub
-		contacts.add(e);
+	public boolean add(E element) {
 		
+		if (size == data.length) {
+			reallocate();
+		}
+		data[size] = element;
+		size ++;
 		insertionSort((Comparator<? super E>) comp);
-		
+
 		return true;
 	}
 
 	@Override
 	public void add(int index, E element) {
+
+		if(index < 0 || index >= size){
+			throw new ArrayIndexOutOfBoundsException(index);
+		}
 		
-		contacts.add(index, element);
-
+		for (int i = size; i > index; i --){
+			data[size] = data[size -1];
+		}
+		data[index] = element;
+		size ++;
+		insertionSort((Comparator<? super E>) comp);
 	}
-
-//	public void bubbleSort(Comparator<? super E> compare) {
-//
-//		for (int i = 0; i < data.length - 1; i++) {
-//
-//			finished = true;
-//
-//			for (int j = 0; j < data.length - 1 - i; j++) {
-//
-//				if (compare.compare(data[j], data[j + 1]) > 0) {
-//
-//					finished = false;
-//					e = data[j];
-//					data[j] = data[j + 1];
-//					data[j + 1] = e;
-//				}
-//			}
-//
-//			if (finished == true) {
-//				break;
-//			}
-//		}
-//	}
-	
 
 	public void bubbleSort(Comparator<? super E> compare) {
 
-		for (int i = 0; i < contacts.size() - 1; i++) {
+		for (int i = 0; i < size - 1; i++) {
 
 			finished = true;
 
-			for (int j = 0; j < contacts.size() - 1 - i; j++) {
+			for (int j = 0; j < size - 1 - i; j++) {
 
-				if (compare.compare(contacts.get(j), contacts.get(j + 1)) > 0) {
+				if (compare.compare(data[j], data[j + 1]) > 0) {
 
 					finished = false;
-					e = contacts.get(j);
-					contacts.set(j, contacts.get(j +1));
-					contacts.set(j +1, e);
+					e = data[j];
+					data[j] = data[j + 1];
+					data[j + 1] = e;
 				}
 			}
 
@@ -86,40 +78,25 @@ public class MyArrayList<E> implements List211<E> {
 
 	@Override
 	public E get(int index) {
-		return contacts.get(index);
+		
+		if(index < 0 || index >= size){
+			throw new ArrayIndexOutOfBoundsException(index);
+		}
+		
+		return data[index];
 	}
-
-//	public void insertionSort(Comparator<? super E> compare) {
-//
-//		for (int i = 0; i < data.length - 1; i++) {
-//
-//			placeHolder = i;
-//
-//			while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
-//
-//				e = data[placeHolder];
-//				data[placeHolder] = data[placeHolder + 1];
-//				data[placeHolder + 1] = e;
-//
-//				if (placeHolder > 0) {
-//					placeHolder--;
-//				}
-//			}
-//		}
-//	}
-	
 
 	public void insertionSort(Comparator<? super E> compare) {
 
-		for (int i = 0; i < contacts.size() - 1; i++) {
+		for (int i = 0; i < size - 1; i++) {
 
 			placeHolder = i;
 
-			while (compare.compare(contacts.get(placeHolder), contacts.get(placeHolder + 1)) > 0) {
+			while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
 
-				e = contacts.get(placeHolder);
-				contacts.set(placeHolder, contacts.get(placeHolder + 1));
-				contacts.set(placeHolder + 1, e);
+				e = data[placeHolder];
+				data[placeHolder] = data[placeHolder + 1];
+				data[placeHolder + 1] = e;
 
 				if (placeHolder > 0) {
 					placeHolder--;
@@ -128,45 +105,34 @@ public class MyArrayList<E> implements List211<E> {
 		}
 	}
 
-	
-	@Override
-	public E remove(int index) {
-		
-		E temp = contacts.get(index);
-		contacts.remove(index);
-		return temp;
+	private void reallocate() {
+		data = Arrays.copyOf(data, data.length * 2);
 	}
 
-//	public void selectionSort(Comparator<? super E> compare) {
-//
-//		for (int i = 0; i < data.length - 1; i++) {
-//
-//			e = data[i];
-//			placeHolder = i;
-//
-//			for (int j = i; j < data.length; j++) {
-//
-//				if (compare.compare(e, data[j]) > 0) {
-//
-//					e = data[j];
-//					placeHolder = j;
-//				}
-//			}
-//
-//			data[placeHolder] = data[i];
-//			data[i] = e;
-//		}
-//	}
-	
+	@Override
+	public E remove(int index) {
+
+		if(index < 0 || index >= size){
+			throw new ArrayIndexOutOfBoundsException(index);
+		}
+		
+		e = data[index];
+		
+		for(int i = index; i < size - 1; i ++){
+			data[i] = data[i + 1];
+		}
+		size --;
+		return e;
+	}
 
 	public void selectionSort(Comparator<? super E> compare) {
 
-		for (int i = 0; i < data.length - 1; i++) {
+		for (int i = 0; i < size - 1; i++) {
 
 			e = data[i];
 			placeHolder = i;
 
-			for (int j = i; j < data.length; j++) {
+			for (int j = i; j < size; j++) {
 
 				if (compare.compare(e, data[j]) > 0) {
 
@@ -182,8 +148,16 @@ public class MyArrayList<E> implements List211<E> {
 
 	@Override
 	public E set(int index, E element) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if(index < 0 || index >= size){
+			throw new ArrayIndexOutOfBoundsException(index);
+		}		
+		
+		e = data[index];
+		data[index] = element;
+		insertionSort((Comparator<? super E>) comp);
+		
+		return e;
 	}
 
 	@Override
