@@ -9,7 +9,7 @@ public class Main {
 		testList[0] = new Contact("AAron", "Black", "Array Listery", "1-234-567-8900", "1-555-432-3456", "1-875-234-9765", "ABlack@esnail.edu");
 		testList[1] = new Contact("Barry", "HornField", "Array Listery", "1-766-900-1234", "1-233-543-6547", "1-875-234-9765", "BField@esnail.edu");
 		testList[2] = new Contact("Corey", "Karington", "Array Listery", "1-678-000-2578", "1-222-666-7777", "1-875-234-9765", "CKarington@esnail.edu");
-		testList[3] = new Contact("Darrel", "Worther", "Array Listery", "1-000-333-6666", "1-030-494-8901", "1-875-234-9765", "DWorther@esnail.edu");
+		testList[3] = new Contact("Darrel", "Waffelhausen", "Array Listery", "1-000-333-6666", "1-030-494-8901", "1-875-234-9765", "DWorther@esnail.edu");
 		testList[4] = new Contact("Ellen", "Smith", "Array Listery", "1-857-000-5432", "1-666-908-9900", "1-875-234-9765", "ESmith@esnail.com");
 		testList[5] = new Contact("Francis", "Forello", "Array Listery", "1-000-923-4455", "1-667-333-5970", "1-875-234-9765", "FForello@esnail.com");
 		testList[6] = new Contact("Greg", "Moore", "Array Listery", "1-456-111-2345", "1-999-567-4968", "1-875-234-9765", "GMoore@esnail.com");
@@ -38,18 +38,17 @@ public class Main {
 		for(int i = 0; i < 20; i ++){
 			contacts.add(testList[i]);
 		}
-//
-//		for(int i = 1; i < 3; i ++){
-//			contacts.add(i * 6, testList[20 + i]);
-//		}
-//
-//		contacts.set(11, testList[24]);
-//		contacts.set(1, testList[25]);
-//		contacts.remove(17);
+
+		for(int i = 0; i < 4; i ++){
+			contacts.add(i * 6, testList[20 + i]);
+		}
+
+		contacts.set(11, testList[24]);
+		contacts.set(1, testList[25]);
+		contacts.remove(17);
 
 		for(int i = 0; i < contacts.size(); i ++){
-		  System.out.println(testList[i].toString());
-//			System.out.println(contacts.get(i).toString());
+			System.out.println(i + " " + contacts.get(i).toString());
 		}
 
 	}

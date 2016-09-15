@@ -264,7 +264,7 @@ public class Contact {
  */
 	@Override
 	public String toString() {
-		return "Contact [firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "Contact [firstName= " + firstName + ", lastName= " + lastName + "]";
 	}
 
 }

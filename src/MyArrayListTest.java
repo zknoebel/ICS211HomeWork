@@ -145,8 +145,38 @@ public class MyArrayListTest {
 		 * Add code to test removing elements from the array list.  These tests can be added
 		 * to separate test case methods (they don't all need to be in here). 
 		 * - Test should cover removing from beginning, middle, and end.
-		 * - Test should also verify the size of the array list is correct
-		 * - Test should check for removing an invalid index (negative or too big).
+		 * + Test should also verify the size of the array list is correct
+		 * + Test should check for removing an invalid index (negative or too big).
 		 */
+
+		MyArrayList<Integer>	ial = new MyArrayList<>();
+		
+		for(int i = 10; i > 0; i --){
+			ial.add(i);
+		}
+		//verify the size of the array list is correct
+		assertEquals(ial.size(), 10);
+		
+		
+		//removing from beginning, middle, and end
+		ial.remove(9);
+		ial.remove(0);
+		ial.remove(5);
+		
+		// Check invalid indices...
+                try {
+                    assertEquals(null, ial.get(-1));
+                    fail("Bad stuff");
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                }
+
+                try {
+  		    assertEquals(null, ial.get(MAX+10));
+                    fail("Bad stuff");
+                }
+                catch (ArrayIndexOutOfBoundsException e) {
+                }
+		
 	}
 }

@@ -21,7 +21,6 @@ public class MyArrayList<E> implements List211<E> {
   MyArrayList() {
 
     data = (E[]) new Object[10];
-    size = data.length;
   }
 
   public int indexOf(Object obj){
@@ -57,16 +56,20 @@ public class MyArrayList<E> implements List211<E> {
   @Override
   public void add(int index, E element) {
 
+
+	    if(size == data.length){
+	      reallocate();
+	    }
     if(index < 0 || index > size){
       throw new ArrayIndexOutOfBoundsException(index);
     }
-    if(size == data.length){
-      reallocate();
-    }
+
+    
     for (int i = size; i > index; i --){
-      data[size] = data[size -1];
+      data[i] = data[i -1];
     }
     data[index] = element;
+
     size ++;
   }
 
