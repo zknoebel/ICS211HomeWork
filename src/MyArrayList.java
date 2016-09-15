@@ -7,174 +7,183 @@ import java.util.Comparator;
  * 
  * @author zac
  *
- * @param <E>
+ * @param <E> allows for arrays of any type to be made
  */
 public class MyArrayList<E> implements List211<E> {
 
-  private int placeHolder;
-  private int size = 0;
-  private E[] data;
-  private E e;
-  private boolean finished;
-  private Comparator comp;
+	private int placeHolder;
+	private int size = 0;
+	private E[] data;
+	private E e;
+	private boolean finished;
 
-  MyArrayList() {
+	//Starts with and empty array of ten
+	@SuppressWarnings("unchecked")
+	MyArrayList() {
 
-    data = (E[]) new Object[10];
-  }
+		data = (E[]) new Object[10];
+	}
 
-  public int indexOf(Object obj){
-    
-    for(int i = 0; i < size; i++){
-      if (obj.equals(data[i])){
-        return i;
-      }
-    }
-    return -1;
-  }
+	//checks to see if a specific object is in the array and if it is, return the index that it is located at
+	public int indexOf(Object obj) {
 
+		for (int i = 0; i < size; i++) {
+			if (obj.equals(data[i])) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
-  public void checkIndex(int index){
-    
-    if(index < 0 || index >= size){
-      throw new ArrayIndexOutOfBoundsException(index);
-    }
-  }
-  @Override
-  public boolean add(E element) {
+	//Checks to see if the given index value is within the MyArrayList size
+	public void checkIndex(int index) {
 
-    if (size == data.length) {
-      reallocate();
-    }
-    data[size] = element;
-    size ++;
+		if (index < 0 || index >= size) {
+			throw new ArrayIndexOutOfBoundsException(index);
+		}
+	}
 
-    return true;
-  }
+	//Adds element at the end of the list and then returns true
+	@Override
+	public boolean add(E element) {
 
-  
-  @Override
-  public void add(int index, E element) {
+		if (size == data.length) {
+			reallocate();
+		}
+		data[size] = element;
+		size++;
 
+		return true;
+	}
 
-	    if(size == data.length){
-	      reallocate();
-	    }
-    if(index < 0 || index > size){
-      throw new ArrayIndexOutOfBoundsException(index);
-    }
+	//Adds element to the array at the given index
+	@Override
+	public void add(int index, E element) {
 
-    
-    for (int i = size; i > index; i --){
-      data[i] = data[i -1];
-    }
-    data[index] = element;
+		if (size == data.length) {
+			reallocate();
+		}
+		if (index < 0 || index > size) {
+			throw new ArrayIndexOutOfBoundsException(index);
+		}
 
-    size ++;
-  }
+		for (int i = size; i > index; i--) {
+			data[i] = data[i - 1];
+		}
+		data[index] = element;
 
-  public void bubbleSort(Comparator<? super E> compare) {
+		size++;
+	}
 
-    for (int i = 0; i < size - 1; i++) {
+	//Takes in a comparator for comparing a specific class and then uses a bubble sort algorithm to sort the array
+	public void bubbleSort(Comparator<? super E> compare) {
 
-      finished = true;
+		for (int i = 0; i < size - 1; i++) {
 
-      for (int j = 0; j < size - 1 - i; j++) {
+			finished = true;
 
-        if (compare.compare(data[j], data[j + 1]) > 0) {
+			for (int j = 0; j < size - 1 - i; j++) {
 
-          finished = false;
-          e = data[j];
-          data[j] = data[j + 1];
-          data[j + 1] = e;
-        }
-      }
+				if (compare.compare(data[j], data[j + 1]) > 0) {
 
-      if (finished == true) {
-        break;
-      }
-    }
-  }
+					finished = false;
+					e = data[j];
+					data[j] = data[j + 1];
+					data[j + 1] = e;
+				}
+			}
 
-  @Override
-  public E get(int index) {
+			if (finished == true) {
+				break;
+			}
+		}
+	}
 
-    checkIndex(index);
+	//Returns the object at the given index
+	@Override
+	public E get(int index) {
 
-    return data[index];
-  }
+		checkIndex(index);
 
-  public void insertionSort(Comparator<? super E> compare) {
+		return data[index];
+	}
 
-    for (int i = 0; i < size - 1; i++) {
+	//Takes in a comparator used to compare a specific class and uses an insertion sort algorithm to sort the array
+	public void insertionSort(Comparator<? super E> compare) {
 
-      placeHolder = i;
+		for (int i = 0; i < size - 1; i++) {
 
-      while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
+			placeHolder = i;
 
-        e = data[placeHolder];
-        data[placeHolder] = data[placeHolder + 1];
-        data[placeHolder + 1] = e;
+			while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
 
-        if (placeHolder > 0) {
-          placeHolder--;
-        }
-      }
-    }
-  }
+				e = data[placeHolder];
+				data[placeHolder] = data[placeHolder + 1];
+				data[placeHolder + 1] = e;
 
-  private void reallocate() {
-    data = Arrays.copyOf(data, data.length * 2);
-  }
+				if (placeHolder > 0) {
+					placeHolder--;
+				}
+			}
+		}
+	}
 
-  @Override
-  public E remove(int index) {
+	//moves array objects to an array of double the size
+	private void reallocate() {
+		data = Arrays.copyOf(data, data.length * 2);
+	}
 
-    checkIndex(index);
+	//removes an object by rewriting over it and shifting all elements with greater indices to the left
+	@Override
+	public E remove(int index) {
 
-    e = data[index];
+		checkIndex(index);
 
-    for(int i = index; i < size - 1; i ++){
-      data[i] = data[i + 1];
-    }
-    size --;
-    return e;
-  }
+		e = data[index];
 
-  public void selectionSort(Comparator<? super E> compare) {
+		for (int i = index; i < size - 1; i++) {
+			data[i] = data[i + 1];
+		}
+		size--;
+		return e;
+	}
 
-    for (int i = 0; i < size - 1; i++) {
+	//takes in a comparator to compare a certain class and then uses a selection sort algorithm to sort the array
+	public void selectionSort(Comparator<? super E> compare) {
 
-      e = data[i];
-      placeHolder = i;
+		for (int i = 0; i < size - 1; i++) {
 
-      for (int j = i; j < size; j++) {
+			e = data[i];
+			placeHolder = i;
 
-        if (compare.compare(e, data[j]) > 0) {
+			for (int j = i; j < size; j++) {
 
-          e = data[j];
-          placeHolder = j;
-        }
-      }
+				if (compare.compare(e, data[j]) > 0) {
 
-      data[placeHolder] = data[i];
-      data[i] = e;
-    }
-  }
+					e = data[j];
+					placeHolder = j;
+				}
+			}
 
-  @Override
-  public E set(int index, E element) {
+			data[placeHolder] = data[i];
+			data[i] = e;
+		}
+	}
 
-    checkIndex(index);		
+	//overwrites an object at the given index with the given element
+	@Override
+	public E set(int index, E element) {
 
-    e = data[index];
-    data[index] = element;
-    return e;
-  }
+		checkIndex(index);
 
-  @Override
-  public int size() {
-    return size;
-  }
+		e = data[index];
+		data[index] = element;
+		return e;
+	}
+
+	@Override
+	public int size() {
+		return size;
+	}
 
 }

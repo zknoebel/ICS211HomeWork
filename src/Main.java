@@ -1,10 +1,15 @@
 
+/**
+ * 
+ * @author Zachery Knoebel
+ * 
+ *         main class used to test MyArrayList and ContactList classes
+ */
 public class Main {
 
 	public static void main(String[] args){
 
-		ContactComparator comp = new ContactComparator();
-		
+//		Creates an array of Contacts to test the MyArrayList and ContactList classes
 		Contact[] testList = new Contact[26];
 		testList[0] = new Contact("AAron", "Black", "Array Listery", "1-234-567-8900", "1-555-432-3456", "1-875-234-9765", "ABlack@esnail.edu");
 		testList[1] = new Contact("Barry", "HornField", "Array Listery", "1-766-900-1234", "1-233-543-6547", "1-875-234-9765", "BField@esnail.edu");
@@ -33,20 +38,31 @@ public class Main {
 		testList[24] = new Contact("Yannie", "Alexzandrovich", "Array Listery", "0", "1-842-876-2414", "1-875-234-9765", "YAlexzandrovich@esnail.com");
 		testList[25] = new Contact("Zebadia", "Ford", "Array Listery", "1-648-348-6844", "1-757-681-8645", "1-875-234-9765", "ZFord@esnail.com");
 
+		//Creates a contact list to test MyArrayList and ContactList classes
 		ContactList contacts = new ContactList();
 
+		//Tests add method without index for MyArrayList class and its implementation of insertionSort method when used in the ContactList class
 		for(int i = 0; i < 20; i ++){
 			contacts.add(testList[i]);
 		}
 
+		//Tests add method with index
 		for(int i = 0; i < 4; i ++){
 			contacts.add(i * 6, testList[20 + i]);
 		}
 
+		//Tests set and remove methods
 		contacts.set(11, testList[24]);
 		contacts.set(1, testList[25]);
 		contacts.remove(17);
 
+		/**
+		 * Prints out first and last names in order of "contacts"
+		 * (The first 19 are sorted by last name
+		 * The next 4 are added in spots 0,6,12,18
+		 * Indices 1 and 11 are replaced with testList[24] and testList[25]
+		 * Index 17 is removed)
+		 */
 		for(int i = 0; i < contacts.size(); i ++){
 			System.out.println(i + " " + contacts.get(i).toString());
 		}

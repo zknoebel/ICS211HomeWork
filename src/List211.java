@@ -1,4 +1,7 @@
 
+/**
+ * @param <E> shortened version of the java list interface
+ */
 public interface List211<E> {
 
   boolean add(E e);
