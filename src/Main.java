@@ -4,7 +4,7 @@ public class Main {
 	public static void main(String[] args){
 
 		ContactComparator comp = new ContactComparator();
-
+		
 		Contact[] testList = new Contact[26];
 		testList[0] = new Contact("AAron", "Black", "Array Listery", "1-234-567-8900", "1-555-432-3456", "1-875-234-9765", "ABlack@esnail.edu");
 		testList[1] = new Contact("Barry", "HornField", "Array Listery", "1-766-900-1234", "1-233-543-6547", "1-875-234-9765", "BField@esnail.edu");
@@ -18,28 +18,26 @@ public class Main {
 		testList[9] = new Contact("Julie", "Jensen", "Array Listery", "1-222-666-7894", "1-321-654-7899", "1-875-234-9765", "JJensen@esnail.com");
 		testList[10] = new Contact("Kyle", "McDoogle", "Array Listery", "1-888-335-6598", "1-321-789-4598", "1-875-234-9765","KMcDoogle@esnail.com");
 		testList[11] = new Contact("Lawrence", "Flemming", "Array Listery", "0-555-985-4895", "1-456-456-1687", "1-875-234-9765","LFlemming@esnail.com");
-		testList[12] = new Contact("Mike", "Glasgo", "Array Listery", "", "", "1-875-234-9765","MGlasgo@esnail.com");
+		testList[12] = new Contact("Mike", "Glasgo", "Array Listery", "0", "0", "1-875-234-9765","MGlasgo@esnail.com");
 		testList[13] = new Contact("Nedward", "Wentsworth", "Array Listery", "1-440-563-8915", "1-458-832-3456", "1-875-234-9765", "NWentsworth@esnail.com");
-		testList[14] = new Contact("Oskarr", "Squinktersmith", "Array Listery", "1-486-891-1111", "", "1-875-234-9765", "OSquinktersmith@esnail.com");
-		testList[15] = new Contact("Patricia", "Merkel", "Array Listery", "1-483-332-5612", "", "1-875-234-9765", "PMerkel@esnail.com");
-		testList[16] = new Contact("Qitra", "Sorrento", "Array Listery", "1-878-879-9999", "", "1-875-234-9765","QSorrento@esnail.com");
+		testList[14] = new Contact("Oskarr", "Squinktersmith", "Array Listery", "1-486-891-1111", "0", "1-875-234-9765", "OSquinktersmith@esnail.com");
+		testList[15] = new Contact("Patricia", "Merkel", "Array Listery", "1-483-332-5612", "0", "1-875-234-9765", "PMerkel@esnail.com");
+		testList[16] = new Contact("Qitra", "Sorrento", "Array Listery", "1-878-879-9999", "0", "1-875-234-9765","QSorrento@esnail.com");
 		testList[17] = new Contact("Ralph", "Flemming", "Array Listery", "1-487-323-5689", "1-888-945-3654", "1-875-234-9765", "RFlemming@esnail.com");
 		testList[18] = new Contact("Samial", "Smith", "Array Listery", "1-857-000-4457", "1-666-908-9900", "1-875-234-9765", "SSmith@esnail.com");
-		testList[19] = new Contact("Tedward", "Wentsworth", "Array Listery", "1-542-789-8888", "", "1-875-234-9765", "TWentsworth@esnail.com");
-		testList[20] = new Contact("Urdel", "Flippenstock", "Array Listery", "", "1-555-666-9898", "1-875-234-9765", "UFlippenstock@esnail.com");
-		testList[21] = new Contact("Valentina", "Ferrara", "Array Listery", "1-856-489-3278", "", "1-875-234-9765", "VFerrara@esnail.com");
-		testList[22] = new Contact("Waldo", "Arlington", "Array Listery", "", "", "1-875-234-9765", "WArlington@esnail.com");
-		testList[23] = new Contact("Xeekiel", "Quint", "Array Listery", "", "", "1-875-234-9765", "XQuint@esnail.com");
-		testList[24] = new Contact("Yannie", "Alexzandrovich", "Array Listery", "", "1-842-876-2414", "1-875-234-9765", "YAlexzandrovich@esnail.com");
+		testList[19] = new Contact("Tedward", "Wentsworth", "Array Listery", "1-542-789-8888", "0", "1-875-234-9765", "TWentsworth@esnail.com");
+		testList[20] = new Contact("Urdel", "Flippenstock", "Array Listery", "0", "1-555-666-9898", "1-875-234-9765", "UFlippenstock@esnail.com");
+		testList[21] = new Contact("Valentina", "Ferrara", "Array Listery", "1-856-489-3278", "0", "1-875-234-9765", "VFerrara@esnail.com");
+		testList[22] = new Contact("Waldo", "Arlington", "Array Listery", "0", "0", "1-875-234-9765", "WArlington@esnail.com");
+		testList[23] = new Contact("Xeekiel", "Quint", "Array Listery", "0", "0", "1-875-234-9765", "XQuint@esnail.com");
+		testList[24] = new Contact("Yannie", "Alexzandrovich", "Array Listery", "0", "1-842-876-2414", "1-875-234-9765", "YAlexzandrovich@esnail.com");
 		testList[25] = new Contact("Zebadia", "Ford", "Array Listery", "1-648-348-6844", "1-757-681-8645", "1-875-234-9765", "ZFord@esnail.com");
 
-		Contact[] contactList = new Contact[20];
+		ContactList contacts = new ContactList();
 
-		MyArrayList contacts = new MyArrayList(contactList, comp);
-
-//		for(int i = 0; i < 20; i ++){
-//			contacts.add(testList[i]);
-//		}
+		for(int i = 0; i < 20; i ++){
+			contacts.add(testList[i]);
+		}
 //
 //		for(int i = 1; i < 3; i ++){
 //			contacts.add(i * 6, testList[20 + i]);
@@ -50,7 +48,8 @@ public class Main {
 //		contacts.remove(17);
 
 		for(int i = 0; i < contacts.size(); i ++){
-			System.out.println(contacts.get(i).toString());
+		  System.out.println(testList[i].toString());
+//			System.out.println(contacts.get(i).toString());
 		}
 
 	}

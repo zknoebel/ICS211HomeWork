@@ -11,158 +11,167 @@ import java.util.Comparator;
  */
 public class MyArrayList<E> implements List211<E> {
 
-	private int placeHolder;
-	private int size = 0;
-	private E[] data;
-	private E e;
-	private boolean finished;
-	private Comparator comp;
+  private int placeHolder;
+  private int size = 0;
+  private E[] data;
+  private E e;
+  private boolean finished;
+  private Comparator comp;
 
-	MyArrayList(E[] listOfContacts, Comparator<? super E> compare) {
-		data = listOfContacts;
-		comp = compare;
-		size = data.length;
-		selectionSort(comp);
-	}
+  MyArrayList() {
 
-	@Override
-	public boolean add(E element) {
-		
-		if (size == data.length) {
-			reallocate();
-		}
-		data[size] = element;
-		size ++;
-		insertionSort((Comparator<? super E>) comp);
+    data = (E[]) new Object[10];
+    size = data.length;
+  }
 
-		return true;
-	}
+  public int indexOf(Object obj){
+    
+    for(int i = 0; i < size; i++){
+      if (obj.equals(data[i])){
+        return i;
+      }
+    }
+    return -1;
+  }
 
-	@Override
-	public void add(int index, E element) {
 
-		if(index < 0 || index >= size){
-			throw new ArrayIndexOutOfBoundsException(index);
-		}
-		
-		for (int i = size; i > index; i --){
-			data[size] = data[size -1];
-		}
-		data[index] = element;
-		size ++;
-		insertionSort((Comparator<? super E>) comp);
-	}
+  public void checkIndex(int index){
+    
+    if(index < 0 || index >= size){
+      throw new ArrayIndexOutOfBoundsException(index);
+    }
+  }
+  @Override
+  public boolean add(E element) {
 
-	public void bubbleSort(Comparator<? super E> compare) {
+    if (size == data.length) {
+      reallocate();
+    }
+    data[size] = element;
+    size ++;
 
-		for (int i = 0; i < size - 1; i++) {
+    return true;
+  }
 
-			finished = true;
+  
+  @Override
+  public void add(int index, E element) {
 
-			for (int j = 0; j < size - 1 - i; j++) {
+    if(index < 0 || index > size){
+      throw new ArrayIndexOutOfBoundsException(index);
+    }
+    if(size == data.length){
+      reallocate();
+    }
+    for (int i = size; i > index; i --){
+      data[size] = data[size -1];
+    }
+    data[index] = element;
+    size ++;
+  }
 
-				if (compare.compare(data[j], data[j + 1]) > 0) {
+  public void bubbleSort(Comparator<? super E> compare) {
 
-					finished = false;
-					e = data[j];
-					data[j] = data[j + 1];
-					data[j + 1] = e;
-				}
-			}
+    for (int i = 0; i < size - 1; i++) {
 
-			if (finished == true) {
-				break;
-			}
-		}
-	}
+      finished = true;
 
-	@Override
-	public E get(int index) {
-		
-		if(index < 0 || index >= size){
-			throw new ArrayIndexOutOfBoundsException(index);
-		}
-		
-		return data[index];
-	}
+      for (int j = 0; j < size - 1 - i; j++) {
 
-	public void insertionSort(Comparator<? super E> compare) {
+        if (compare.compare(data[j], data[j + 1]) > 0) {
 
-		for (int i = 0; i < size - 1; i++) {
+          finished = false;
+          e = data[j];
+          data[j] = data[j + 1];
+          data[j + 1] = e;
+        }
+      }
 
-			placeHolder = i;
+      if (finished == true) {
+        break;
+      }
+    }
+  }
 
-			while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
+  @Override
+  public E get(int index) {
 
-				e = data[placeHolder];
-				data[placeHolder] = data[placeHolder + 1];
-				data[placeHolder + 1] = e;
+    checkIndex(index);
 
-				if (placeHolder > 0) {
-					placeHolder--;
-				}
-			}
-		}
-	}
+    return data[index];
+  }
 
-	private void reallocate() {
-		data = Arrays.copyOf(data, data.length * 2);
-	}
+  public void insertionSort(Comparator<? super E> compare) {
 
-	@Override
-	public E remove(int index) {
+    for (int i = 0; i < size - 1; i++) {
 
-		if(index < 0 || index >= size){
-			throw new ArrayIndexOutOfBoundsException(index);
-		}
-		
-		e = data[index];
-		
-		for(int i = index; i < size - 1; i ++){
-			data[i] = data[i + 1];
-		}
-		size --;
-		return e;
-	}
+      placeHolder = i;
 
-	public void selectionSort(Comparator<? super E> compare) {
+      while (compare.compare(data[placeHolder], data[placeHolder + 1]) > 0) {
 
-		for (int i = 0; i < size - 1; i++) {
+        e = data[placeHolder];
+        data[placeHolder] = data[placeHolder + 1];
+        data[placeHolder + 1] = e;
 
-			e = data[i];
-			placeHolder = i;
+        if (placeHolder > 0) {
+          placeHolder--;
+        }
+      }
+    }
+  }
 
-			for (int j = i; j < size; j++) {
+  private void reallocate() {
+    data = Arrays.copyOf(data, data.length * 2);
+  }
 
-				if (compare.compare(e, data[j]) > 0) {
+  @Override
+  public E remove(int index) {
 
-					e = data[j];
-					placeHolder = j;
-				}
-			}
+    checkIndex(index);
 
-			data[placeHolder] = data[i];
-			data[i] = e;
-		}
-	}
+    e = data[index];
 
-	@Override
-	public E set(int index, E element) {
+    for(int i = index; i < size - 1; i ++){
+      data[i] = data[i + 1];
+    }
+    size --;
+    return e;
+  }
 
-		if(index < 0 || index >= size){
-			throw new ArrayIndexOutOfBoundsException(index);
-		}		
-		
-		e = data[index];
-		data[index] = element;
-		insertionSort((Comparator<? super E>) comp);
-		
-		return e;
-	}
+  public void selectionSort(Comparator<? super E> compare) {
 
-	@Override
-	public int size() {
-		return size;
-	}
+    for (int i = 0; i < size - 1; i++) {
+
+      e = data[i];
+      placeHolder = i;
+
+      for (int j = i; j < size; j++) {
+
+        if (compare.compare(e, data[j]) > 0) {
+
+          e = data[j];
+          placeHolder = j;
+        }
+      }
+
+      data[placeHolder] = data[i];
+      data[i] = e;
+    }
+  }
+
+  @Override
+  public E set(int index, E element) {
+
+    checkIndex(index);		
+
+    e = data[index];
+    data[index] = element;
+    return e;
+  }
+
+  @Override
+  public int size() {
+    return size;
+  }
 
 }
